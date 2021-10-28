@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     bg = document.querySelector('.promo__bg'),
     genre = bg.querySelector('.promo__genre'),
     movieList = document.querySelector('.promo__interactive-list'),
-    // menuList = document.querySelector('.promo__menu-list'),
     addForm = document.querySelector('form.add'),
     addInput = addForm.querySelector('.adding__input'),
     checkBox = addForm.querySelector('[type="checkbox"]');
@@ -75,32 +74,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function createMovieList(films, parent) {
     parent.innerHTML = '';
-
+    sortArray(films);
     films.forEach((film, i) => {
-      movieList.innerHTML += `
+      parent.innerHTML += `
             <li class="promo__interactive-item">${i + 1} ${film}
                 <div class="delete"></div>
             </li>
         `;
     });
+
+// 1) Обращаемся к классу всех корзин (.delete), вешаем обработчик событий на клик. 2) Обращаемся к родителю корзины и удаляем его (remove()). 3) С помощью метода splice(i- номер эл-та, 1 - кол-во эл-тов) удаляем фильм из базы данных. 4) Вызываем ф-цию внутри ф-ции (рекурсия), чтобы обновить нумерацию списка.
+    document.querySelectorAll('.delete').forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        btn.parentElement.remove();
+        movieDB.movies.splice(i, 1);
+
+        createMovieList(films, parent);
+      });
+    });
   }
+
   deleteAdv(adDelete);
   makeChanges();
-  sortArray(movieDB.movies);
   createMovieList(movieDB.movies, movieList);
-
-  // menuList.innerHTML = '';
-
-  // MenuDB.menu.forEach((item, i) => {
-  //   menuList.innerHTML += `
-  //         <li><a class="promo__menu-item promo__menu-item_active" href="#">${
-  //           i + 1
-  //         } ${item}</a></li>
-  //     `;
-  // });
-
-  // document.querySelector('.add button').addEventListener('click', () => {
-  //   let data = document.querySelector('.adding__input').value;
-  //   movieDB.movies.push(data);
-  // });
 });
