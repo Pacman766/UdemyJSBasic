@@ -55,7 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
       sortArray(movieDB.movies);
       createMovieList(movieDB.movies, movieList);
     }
-
+    if (favorite) {
+      console.log('Добавляем любимый фильм');
+    }
     event.target.reset();
   });
 
@@ -83,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     });
 
-// 1) Обращаемся к классу всех корзин (.delete), вешаем обработчик событий на клик. 2) Обращаемся к родителю корзины и удаляем его (remove()). 3) С помощью метода splice(i- номер эл-та, 1 - кол-во эл-тов) удаляем фильм из базы данных. 4) Вызываем ф-цию внутри ф-ции (рекурсия), чтобы обновить нумерацию списка.
+    // 1) Обращаемся к классу всех корзин (.delete), вешаем обработчик событий на клик. 2) Обращаемся к родителю корзины и удаляем его (remove()). 3) С помощью метода splice(i- номер эл-та, 1 - кол-во эл-тов) удаляем фильм из базы данных. 4) Вызываем ф-цию внутри ф-ции (рекурсия), чтобы обновить нумерацию списка.
     document.querySelectorAll('.delete').forEach((btn, i) => {
       btn.addEventListener('click', () => {
         btn.parentElement.remove();
